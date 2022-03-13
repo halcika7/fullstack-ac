@@ -2,6 +2,7 @@ import { ObjectId } from '@interfaces/common.interface';
 import { IsEqualTo } from '@utils/validators/is-equal-to.validator';
 import { UniqueValue } from '@utils/validators/unique-property-value';
 import {
+  IsMongoId,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -40,6 +41,9 @@ export class CreateUserDto {
 }
 
 export class UpdateUserDto {
+  @IsMongoId()
+  _id!: ObjectId;
+
   @IsString()
   @MinLength(3)
   @MaxLength(30)

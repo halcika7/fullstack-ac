@@ -19,17 +19,13 @@ export class ProgramController {
     }
   };
 
-  getPrograms: RequestHandlerAuth = async (_, res, next) => {
-    try {
-      const data = await this.programService.getPrograms();
+  getPrograms: RequestHandlerAuth = async (_, res, __) => {
+    const data = await this.programService.getPrograms();
 
-      return new ResponseBuilder(res)
-        .setResponseStatus(HttpStatusCode.OK)
-        .setData(data)
-        .build();
-    } catch (error) {
-      return next(error);
-    }
+    return new ResponseBuilder(res)
+      .setResponseStatus(HttpStatusCode.OK)
+      .setData(data)
+      .build();
   };
 
   getProgram: RequestHandlerAuth = async (req, res, next) => {

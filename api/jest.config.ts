@@ -18,7 +18,12 @@ const config = {
   transform: {
     '^.+\\.ts': 'ts-jest',
   },
-  collectCoverageFrom: ['src/**/*.ts', '!src/server.ts'],
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    '!src/server.ts',
+    '!src/database/seeder.ts',
+    '!src/database/index.ts',
+  ],
   globals: {
     'ts-jest': {
       diagnostics: false,

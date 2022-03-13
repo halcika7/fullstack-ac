@@ -5,6 +5,7 @@ import hpp from 'hpp';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { errorHandle } from './middlewares/error.middleware';
+import morganMiddleware from './middlewares/morgan.middleware';
 
 import { connectDb } from './database';
 import { seedDb } from './database/seeder';
@@ -44,6 +45,7 @@ export class App {
       helmet(),
       hpp(),
       cors({ origin: '', credentials: true }),
+      morganMiddleware,
     ]);
   }
 

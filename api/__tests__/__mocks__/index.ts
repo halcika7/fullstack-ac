@@ -1,5 +1,7 @@
+import 'reflect-metadata';
 import { HttpStatusCode } from '@enums/http-status.enum';
 import { Response } from 'supertest';
+import { env } from '@utils/env.util';
 import { instance } from './util';
 
 export const request = instance.getRequest();
@@ -13,52 +15,30 @@ export const cleanup = async () => {
 };
 
 export const getToken = (rsp: Response) => {
-  const token = rsp.headers['set-cookie']?.map((cookie: string) =>
-    cookie.replace('HttpOnly', 'HttpOnly=true')
-  ) as undefined | string[];
-
-  return token?.[0] || '';
+  return rsp.body.result.token;
 };
 
 export const signInHelper = async (
-  email = process.env.SUPER_ADMIN_EMAIL,
-  password = process.env.SUPER_ADMIN_PASS
+  username = env.users.admin,
+  password = env.users.admin_pass
 ) => {
   const rsp = await request
     .post({ url: '/auth/login' })
-    .send({ email, password })
+    .send({ username, password })
     .expect(HttpStatusCode.OK);
 
   return getToken(rsp);
 };
 
-export const signInProjectOwner = () =>
-  signInHelper('project_owner@email.com', 'password');
+export const signOutHelper = async (token: string) => {
+  await request.post({ url: '/auth/logout', token }).expect(HttpStatusCode.OK);
+};
 
 export const getMeId = async (jwt: string) => {
   const token = jwt ?? (await signInHelper());
   const rsp = await request
-    .get({ url: '/users/me', token })
+    .get({ url: '/auth/me', token })
     .send()
     .expect(HttpStatusCode.OK);
-  return rsp.body._id;
-};
-
-export const sleep = async (num = 1) => {
-  await new Promise(r => {
-    setTimeout(r, num * 1000);
-  });
-};
-
-export const profile = {
-  firstName: 'name',
-  lastName: 'last name',
-  address: {
-    street1: 'adress1',
-    street2: 'address2',
-    city: 'city',
-    state: 'state',
-    country: 'country',
-    zip: 'zip',
-  },
+  return rsp.body.result._id;
 };

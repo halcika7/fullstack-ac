@@ -1,34 +1,16 @@
 import { Response } from 'express';
 
-export interface IJSONBuilder<T> {
-  setData(data: T): this;
+type ResponseObject<T> = { result?: T };
 
-  build(): Response;
-
-  setResponseStatus(status: number): this;
-}
-
-export class JSONResponse<T> {
-  private result?: T;
-
-  set Result(result: T | undefined) {
-    this.result = result;
-  }
-
-  get Result(): T | undefined {
-    return this.result;
-  }
-}
-
-export class ResponseBuilder<T> implements IJSONBuilder<T> {
-  private responseObject: JSONResponse<T>;
+export class ResponseBuilder<T> {
+  private readonly responseObject: ResponseObject<T>;
 
   constructor(private readonly response: Response) {
-    this.responseObject = new JSONResponse<T>();
+    this.responseObject = {};
   }
 
   setData(data: T) {
-    this.responseObject.Result = data;
+    this.responseObject.result = data;
 
     return this;
   }

@@ -7,3 +7,8 @@ process.env.TOKEN_REFRESH_PATH = '/api/v1/auth/refresh';
 process.env.TOKEN_REFRESH_NAME = 'refresh-token';
 
 process.env.NODE_ENV = 'test';
+
+process.env.ADMIN_USERNAME = 'admin';
+process.env.ADMIN_PASSWORD = 'password';
+process.env.TEST_CUSTOMER_USERNAME = 'customer';
+process.env.TEST_CUSTOMER_PASSWORD = 'password';

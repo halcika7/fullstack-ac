@@ -1,3 +1,4 @@
+import { UserRoles } from '@enums/user-roles.enum';
 import { ActivityRepository } from '@repository/activity.repository';
 import { FacilityStatRepository } from '@repository/facility-stat.repository';
 import { OrderRepository } from '@repository/order.repository';
@@ -18,16 +19,19 @@ const { users } = env;
 
 export const seedDb = async () => {
   try {
-    const admin = await userRepository.getByUsername(users.admin);
+    let admin = await userRepository.getByUsername(users.admin);
 
     if (!admin) {
-      await userRepository.create({
+      admin = await userRepository.create({
         first_name: 'Admin',
         last_name: 'Admin',
         username: users.admin,
         password: users.admin_pass,
         confirmPassword: users.admin_pass,
       });
+
+      admin.role = UserRoles.admin;
+      await admin.save();
     }
 
     let test = await userRepository.getByUsername(users.test);

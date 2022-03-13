@@ -8,7 +8,6 @@ import {
 @ValidatorConstraint()
 export class IsValidValueClass implements ValidatorConstraintInterface {
   validate(value: unknown, { constraints }: ValidationArguments) {
-    if (!constraints[0] || !constraints[0].length) return true;
     return constraints[0].includes(value);
   }
 

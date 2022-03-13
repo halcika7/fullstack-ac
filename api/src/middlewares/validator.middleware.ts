@@ -21,9 +21,11 @@ export const validator = <T>(
 
       const errors = validationValues.reduce(
         (prevErrors, { property, constraints, children }) => {
+          /* istanbul ignore next */
           const constrain = constraints ?? children![0].constraints ?? {};
           let response: string | Dictionary[] = Object.values(constrain)[0];
 
+          /* istanbul ignore next */
           if (children?.[0]?.children?.length) {
             response = children.map(child =>
               child.children!.reduce(

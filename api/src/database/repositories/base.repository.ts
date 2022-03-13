@@ -27,14 +27,6 @@ export class Repository<T extends Document, U> {
     return this.model.find();
   }
 
-  deleteMany() {
-    return this.model.deleteMany();
-  }
-
-  deleteById(id: string | ObjectId) {
-    return this.model.findByIdAndDelete(id);
-  }
-
   bulkWrite(data: U[]) {
     return this.model.insertMany(data);
   }

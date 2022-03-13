@@ -45,7 +45,7 @@ export class AuthService {
       throw new BadRequest({ message: 'Invalid credentials' });
     }
 
-    const equal = await this.hashUtil.verify(user?.password, data.password);
+    const equal = await this.hashUtil.verify(user.password, data.password);
 
     if (!equal) {
       throw new BadRequest({ message: 'Invalid credentials' });
@@ -74,10 +74,6 @@ export class AuthService {
     }
 
     return this.getTokens(user._id);
-  }
-
-  getMe(id: ObjectId) {
-    return this.userRepository.getById(id);
   }
 
   private getTokens(id: ObjectId) {

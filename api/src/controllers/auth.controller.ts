@@ -55,7 +55,7 @@ export class AuthController {
 
   refreshToken: RequestHandler = async (req, res, _) => {
     const token: string = req.cookies[env.token.TOKEN_REFRESH_NAME];
-    const check = req.query.firstCheck === 'false';
+    const check = !req.query.firstCheck;
 
     try {
       const { accessToken, refreshToken } = await this.authService.refresh(
@@ -78,16 +78,10 @@ export class AuthController {
     }
   };
 
-  getMe: RequestHandlerAuth = async (req, res, next) => {
-    try {
-      const user = await this.authService.getMe(req.user!._id);
-
-      return new ResponseBuilder(res)
-        .setResponseStatus(HttpStatusCode.OK)
-        .setData(user)
-        .build();
-    } catch (error) {
-      return next(error);
-    }
+  getMe: RequestHandlerAuth = async (req, res, _) => {
+    return new ResponseBuilder(res)
+      .setResponseStatus(HttpStatusCode.OK)
+      .setData(req.user)
+      .build();
   };
 }

@@ -17,7 +17,7 @@ export class HttpException extends Error {
 
   private initMessage() {
     const match = this.constructor.name.match(/[A-Z][a-z]+|[0-9]+/g);
-    this.message = match ? match.join(' ') : '';
+    this.message = match!.join(' ');
   }
 
   private initName() {

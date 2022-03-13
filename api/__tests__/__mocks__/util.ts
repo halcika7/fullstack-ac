@@ -64,7 +64,9 @@ class HttpRequest {
 
   private hook(method: 'post' | 'get' | 'put' | 'patch' | 'delete') {
     return (args: { url: string; token?: string }) => {
-      const req = this.requestWithSupertest?.[method](args.url) as Test;
+      const req = this.requestWithSupertest?.[method](
+        `/api/v1${args.url}`
+      ) as Test;
 
       if (args.token) {
         req.set('Authorization', `Bearer ${args.token}`);

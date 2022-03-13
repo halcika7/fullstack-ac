@@ -1,7 +1,7 @@
 import { UserSchema } from '@schema/user.schema';
 import { UserModel } from '@model/user.model';
 
-import { CreateUserDto } from '@dto/user.dto';
+import { CreateUserDto, UpdateUserDto } from '@dto/user.dto';
 import { ObjectId } from '@interfaces/common.interface';
 import { Repository } from './base.repository';
 
@@ -23,7 +23,7 @@ export class UserRepository extends Repository<UserModel, CreateUserDto> {
     return super.model.findOne({ username });
   }
 
-  updateUserProfile(id: ObjectId, data: CreateUserDto) {
+  updateUserProfile(id: ObjectId, data: UpdateUserDto) {
     return super.model
       .findByIdAndUpdate(id, data)
       .select('first_name last_name username');
