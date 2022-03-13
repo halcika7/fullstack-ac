@@ -1,0 +1,17 @@
+FROM node:16-alpine
+
+RUN mkdir /app && chown -R node:node /app
+
+WORKDIR /app
+
+EXPOSE 3000
+
+USER node
+
+COPY --chown=node:node ./package.json ./
+
+RUN yarn
+
+COPY --chown=node:node . .
+
+CMD ["yarn", "start"]

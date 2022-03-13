@@ -1,0 +1,10 @@
+node_modules
+globalConfig.json
+dist
+.eslintcache
+coverage
+logs
+yarn-debug.log*
+yarn-error.log*
+yarn.lock
+package-lock.json

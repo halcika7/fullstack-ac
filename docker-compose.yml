@@ -1,0 +1,45 @@
+version: "3.7"
+services:
+  mongo:
+    image: mongo
+    restart: always
+    container_name: ant-colony-mongo
+    volumes:
+      - ./db:/volume
+    networks:
+      - ant-colony-network
+    ports:
+      - "27017:27017"
+  api:
+    restart: always
+    depends_on:
+      - mongo
+    container_name: ant-colony-api
+    build:
+      context: ./api
+      dockerfile: Dockerfile.development
+    volumes:
+      - /app/node_modules
+      - ./api:/app
+      - ./api/.env.development:/app/.env
+    ports:
+      - "5000:5000"
+    networks:
+      - ant-colony-network
+  client:
+    restart: always
+    depends_on:
+      - api
+    container_name: ant-colony-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile.development
+    ports:
+      - "3000:3000"
+    networks:
+      - ant-colony-network
+networks:
+  ant-colony-network:
+    driver: bridge
+volumes:
+  db:

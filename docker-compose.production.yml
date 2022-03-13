@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  mongo:
+    image: mongo
+    container_name: ant-colony-mongo
+    volumes:
+      - ./db:/volume
+    networks:
+      - ant-colony-network
+  api:
+    depends_on:
+      - mongo
+    container_name: ant-colony-api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    env_file: ./api/.env
+    volumes:
+      - /api/node_modules
+      - ./api/:/api
+    ports:
+      - "5000:5000"
+    networks:
+      - ant-colony-network
+  client:
+    depends_on:
+      - api
+    container_name: ant-colony-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - ant-colony-network
+networks:
+  ant-colony-network:
+    driver: bridge
+volumes:
+  db:

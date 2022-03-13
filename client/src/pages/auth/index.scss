@@ -1,0 +1,14 @@
+.auth-content {
+  max-width: 500px;
+  padding: 4rem 0;
+
+  .submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > .spinner-border {
+      vertical-align: -0.5em;
+    }
+  }
+}
