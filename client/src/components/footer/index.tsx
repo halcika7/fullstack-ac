@@ -1,4 +1,5 @@
 import { Col, Container, Row } from 'reactstrap';
+import './index.scss';
 
 function Footer() {
   return (

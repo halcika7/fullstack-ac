@@ -1,7 +1,7 @@
 import { ActivityModel } from '@model/activity';
 import { CreateActivityDto } from '@dto/activity.dto';
 import { ActivitySchema } from '@schema/activity.schema';
-import { FilterQuery } from 'mongoose';
+import { FilterQuery, Types } from 'mongoose';
 import { Repository } from './base.repository';
 
 export class ActivityRepository extends Repository<
@@ -25,7 +25,7 @@ export class ActivityRepository extends Repository<
     const filter: FilterQuery<ActivityModel> = {};
 
     if (id) {
-      filter._id = { $gt: id };
+      filter._id = { $gt: new Types.ObjectId(id) };
     }
 
     return this.model.find(filter).limit(20);

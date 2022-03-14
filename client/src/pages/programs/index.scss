@@ -1,0 +1,22 @@
+.programs {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+
+  .programs__card_table {
+    margin-bottom: 2rem;
+  }
+
+  svg {
+    height: 20px;
+  }
+
+  .icons {
+    button:first-child {
+      margin-right: 1rem;
+
+      svg {
+        fill: #fff;
+      }
+    }
+  }
+}

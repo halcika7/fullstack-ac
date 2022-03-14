@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Container } from 'reactstrap';
-import Footer from './footer';
-import Header from './header';
+import Footer from '../footer';
+import Header from '../header';
 
 type Props = {
   children: ReactNode;

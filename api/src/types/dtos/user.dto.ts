@@ -33,7 +33,10 @@ export class CreateUserDto {
   @IsString()
   @MinLength(6)
   @MaxLength(30)
-  @Matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*.])/)
+  @Matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*.])/, {
+    message:
+      'Password should contain at least one uppercase letter, one lowercase letter and one special character',
+  })
   password!: string;
 
   @IsEqualTo<CreateUserDto>('password')

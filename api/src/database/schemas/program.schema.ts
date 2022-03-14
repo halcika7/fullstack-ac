@@ -10,7 +10,6 @@ export const ProgramSchema = new Schema(
     options: {
       type: [
         {
-          _id: false,
           name: String,
           price: Number,
           sedan: Number,

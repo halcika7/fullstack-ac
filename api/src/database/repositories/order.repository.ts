@@ -1,7 +1,7 @@
 import { OrderSchema } from '@schema/order.schema';
 import { OrderModel } from '@model/order.model';
 import { CreateOrderDto } from '@dto/order.dto';
-import { FilterQuery } from 'mongoose';
+import { FilterQuery, Types } from 'mongoose';
 import { months, OrdersByMonth } from '@interfaces/order.interface';
 import { Repository } from './base.repository';
 
@@ -29,14 +29,14 @@ export class OrderRepository extends Repository<OrderModel, CreateOrderDto> {
     }
 
     if (id) {
-      filter._id = { $gt: id };
+      filter._id = { $gt: new Types.ObjectId(id) };
     }
 
     return this.model.find(filter).limit(20);
   }
 
   getNumberOfOrdersByMonth(year: number, customer?: string) {
-    const match = customer ? { customer } : {};
+    const match = customer ? { customer: new Types.ObjectId(customer) } : {};
     return this.model.aggregate<OrdersByMonth>([
       { $match: match },
       {

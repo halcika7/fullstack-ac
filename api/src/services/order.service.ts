@@ -32,16 +32,18 @@ export class OrderService {
   async create(data: CreateOrderDto) {
     const order = await this.orderRepository.create(data);
 
-    this.userRepository.incrementAfterOrder(data.customer, data.total_price);
-    this.activityService.createOrder(data.customer, {
-      total: data.total_price,
-      discount: data.discount,
-      car_type: data.car_type,
-    });
-    this.facilityStatRepository.incrementAfterOrder(
-      data.total_price,
-      data.total_price - data.price
-    );
+    await Promise.all([
+      this.userRepository.incrementAfterOrder(data.customer, data.total_price),
+      this.activityService.createOrder(data.customer, {
+        total: data.total_price,
+        discount: data.discount,
+        car_type: data.car_type,
+      }),
+      this.facilityStatRepository.incrementAfterOrder(
+        data.total_price,
+        data.total_price - data.price
+      ),
+    ]);
 
     return order;
   }

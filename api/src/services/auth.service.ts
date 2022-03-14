@@ -33,8 +33,10 @@ export class AuthService {
 
   async register(data: CreateUserDto) {
     const customer = await this.userRepository.create(data);
-    this.activityService.createNewSignUp(customer._id);
-    this.facilityStatRepository.incrementCustomers();
+    await Promise.all([
+      this.activityService.createNewSignUp(customer._id),
+      this.facilityStatRepository.incrementCustomers(),
+    ]);
     return customer;
   }
 

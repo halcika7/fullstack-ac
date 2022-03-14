@@ -1,0 +1,23 @@
+.sidebar {
+  min-width: 150px;
+  max-width: 250px;
+  background: #202c45;
+
+  .nav-item {
+    a {
+      color: #fff;
+
+      &:hover,
+      &.active {
+        background: #fff;
+
+        color: #7386d5;
+      }
+    }
+  }
+}
+
+.side-menu {
+  padding: 1.5rem 0;
+  height: 50vh;
+}

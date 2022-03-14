@@ -1,4 +1,4 @@
-import { CreateProgramDto } from '@dto/program.dto';
+import { CreateProgramDto, ProgramOptionDto } from '@dto/program.dto';
 import { HttpStatusCode } from '@enums/http-status.enum';
 import { env } from '@utils/env.util';
 import { signInHelper, request, signOutHelper } from '../__mocks__';
@@ -60,7 +60,7 @@ export const programRoutes = () => {
     });
 
     describe('Testing update program', () => {
-      it('should fil to update program', async () => {
+      it('should fail to update program', async () => {
         const program = await request.get({
           url: `/program/${id}`,
           token,
@@ -68,7 +68,9 @@ export const programRoutes = () => {
         const rsp = await request
           .put({ url: `/program/61e9893c8b744ae645a8a3b8`, token })
           .send({
-            options: program.body.result.options,
+            options: program.body.result.options.map(
+              ({ _id: _, ...rest }: ProgramOptionDto) => rest
+            ),
             name: 'Program name updated',
           });
 
@@ -81,7 +83,9 @@ export const programRoutes = () => {
           token,
         });
         const rsp = await request.put({ url: `/program/${id}`, token }).send({
-          options: program.body.result.options,
+          options: program.body.result.options.map(
+            ({ _id: _, ...rest }: ProgramOptionDto) => rest
+          ),
           name: 'Program name updated',
         });
 

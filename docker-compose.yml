@@ -31,6 +31,10 @@ services:
     depends_on:
       - api
     container_name: ant-colony-client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+      - ./client/.env:/app/.env
     build:
       context: ./client
       dockerfile: Dockerfile.development

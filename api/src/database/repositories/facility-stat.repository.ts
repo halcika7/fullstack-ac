@@ -43,4 +43,8 @@ export class FacilityStatRepository extends Repository<
 
     return this.model.findOneAndUpdate({}, update);
   }
+
+  getOne() {
+    return this.model.findOne();
+  }
 }

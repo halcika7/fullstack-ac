@@ -44,7 +44,7 @@ export class App {
       cookieParser(),
       helmet(),
       hpp(),
-      cors({ origin: '', credentials: true }),
+      cors({ origin: env.origin, credentials: true }),
       morganMiddleware,
     ]);
   }

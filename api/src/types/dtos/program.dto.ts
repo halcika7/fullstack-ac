@@ -13,7 +13,9 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-class ProgramOptionDto {
+export class ProgramOptionDto {
+  _id?: string;
+
   @IsNotEmpty()
   @IsString()
   @MinLength(4)

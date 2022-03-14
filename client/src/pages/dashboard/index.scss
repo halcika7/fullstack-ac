@@ -1,0 +1,39 @@
+.customer-dashboard {
+  padding: 4rem 0;
+  width: 100%;
+
+  .icons {
+    @media screen and (max-width: 992px) {
+      width: 100%;
+      margin: 0;
+    }
+
+    > div {
+      margin-bottom: 2rem;
+
+      @media screen and (max-width: 992px) {
+        padding: 0;
+        width: 100%;
+      }
+    }
+
+    .card-body {
+      // padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      svg {
+        height: 3rem;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  .recharts-responsive-container {
+    min-height: 400px;
+  }
+}

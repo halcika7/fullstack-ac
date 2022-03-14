@@ -1,0 +1,16 @@
+.spinner-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > div {
+    height: 100px;
+    width: 100px;
+    border-width: 15px;
+  }
+}

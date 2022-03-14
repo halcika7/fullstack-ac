@@ -1,16 +1,20 @@
-import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { store } from './store';
+import { injector } from './config/injectAxios';
+
+injector(store);
 
 ReactDOM.render(
-  <StrictMode>
+  <Provider store={store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 

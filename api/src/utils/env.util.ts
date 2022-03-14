@@ -30,6 +30,7 @@ interface Configuration {
   token: Readonly<TokenEnv>;
   db: Readonly<DB>;
   users: Readonly<Users>;
+  origin: string;
 }
 
 const {
@@ -48,6 +49,7 @@ const {
   ADMIN_PASSWORD,
   TEST_CUSTOMER_USERNAME,
   TEST_CUSTOMER_PASSWORD,
+  ORIGIN,
 } = process.env;
 
 export const env: Readonly<Configuration> = {
@@ -72,4 +74,5 @@ export const env: Readonly<Configuration> = {
     test: TEST_CUSTOMER_USERNAME,
     test_pass: TEST_CUSTOMER_PASSWORD,
   } as Users,
+  origin: ORIGIN as string,
 };

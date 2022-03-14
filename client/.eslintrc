@@ -14,7 +14,6 @@
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
-    "plugin:sonarjs/recommended",
     "plugin:promise/recommended",
     "plugin:prettier/recommended"
   ],
@@ -32,7 +31,6 @@
     "@typescript-eslint",
     "unicorn",
     "import",
-    "sonarjs",
     "promise",
     "no-secrets",
     "prettier"
@@ -40,6 +38,10 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "import/prefer-default-export": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "no-param-reassign": ["error", { "props": false }],
+    "react/require-default-props": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "no-underscore-dangle": "off"
   }
 }
