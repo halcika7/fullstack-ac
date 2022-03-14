@@ -23,6 +23,8 @@ export const profileRoutes = () => {
           _id: id,
           first_name: 'name',
           last_name: 'last_name',
+          password: '1234567890@Q2d',
+          confirmPassword: '1234567890@Q2d',
         });
 
         expect(rsp.statusCode).toEqual(HttpStatusCode.OK);
