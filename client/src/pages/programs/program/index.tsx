@@ -38,7 +38,6 @@ function ProgramCreate() {
     formState: { isSubmitting, errors, isValid },
     handleSubmit,
     register,
-    clearErrors,
     control,
   } = useForm<ProgramDto>({
     resolver: yupResolver(schema),
@@ -52,7 +51,6 @@ function ProgramCreate() {
   });
 
   const onSubmit: SubmitHandler<ProgramDto> = async data => {
-    clearErrors();
     dispatch(createProgram(data));
   };
 
@@ -88,6 +86,8 @@ function ProgramCreate() {
             style={{ marginBottom: '2rem' }}
             color="success"
             onClick={addOption}
+            data-testid="add-option"
+            role="option"
           >
             Add Option
           </Button>
@@ -97,6 +97,7 @@ function ProgramCreate() {
               type="text"
               label="Name"
               error={errors.name?.message}
+              testId="name"
             />
 
             <h3>Options</h3>
@@ -118,6 +119,7 @@ function ProgramCreate() {
               color="success"
               className="submit-button"
               disabled={!isValid}
+              data-testid="submit"
             >
               {isSubmitting ? (
                 <Spinner color="info">Loading...</Spinner>

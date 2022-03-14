@@ -21,27 +21,27 @@ import { toTwoDigits } from '../../utils/toTwoDigits';
 const userState = createSelector(
   (state: AppState) => state.auth,
   (state: AppState) => state.dashboard,
-  (auth, dashboard) => ({ user: auth.user!, ...dashboard })
+  (auth, dashboard) => ({ user: auth.user, ...dashboard })
 );
 
 function Dashboard() {
   const dispatch = useDispatch();
   const { user, orders, stat } = useSelector(userState);
 
-  const isCustomer = user.role === 'customer';
+  const isCustomer = user?.role === 'customer';
 
   useEffect(() => {
     dispatch(ordersByMonth());
   }, [dispatch]);
 
   useEffect(() => {
-    if (user.role === 'admin') {
+    if (user?.role === 'admin') {
       dispatch(getFacilityStats());
     }
-  }, [dispatch, user.role]);
+  }, [dispatch, user?.role]);
 
   return (
-    <div className="customer-dashboard">
+    <div className="customer-dashboard" data-testid="dashboard">
       <Row className="icons">
         <Col md={{ size: 6 }}>
           <Card>
@@ -91,7 +91,7 @@ function Dashboard() {
       <Col>
         <Card>
           <CardBody>
-            <ResponsiveContainer>
+            <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 width={500}
                 height={400}

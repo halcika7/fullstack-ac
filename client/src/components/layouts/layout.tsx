@@ -11,7 +11,9 @@ function Layout({ children }: Props) {
   return (
     <>
       <Header />
-      <Container tag="main">{children}</Container>
+      <Container tag="main" data-testid="main">
+        {children}
+      </Container>
       <Footer />
     </>
   );

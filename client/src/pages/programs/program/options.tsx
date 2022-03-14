@@ -19,6 +19,7 @@ function ProgramOption({ register, index, errors, removeOption }: Props) {
           type="text"
           label="Name"
           error={errors?.[index]?.name?.message}
+          testId="name1"
         />
       </Col>
       <Col sm={{ size: 12 }} md={{ size: 4 }} lg={{ size: 3 }} xl={{ size: 2 }}>
@@ -62,7 +63,12 @@ function ProgramOption({ register, index, errors, removeOption }: Props) {
         />
       </Col>
       <Col sm={{ size: 12 }}>
-        <Button block color="danger" onClick={removeOption(index)}>
+        <Button
+          data-testid="remove-option"
+          block
+          color="danger"
+          onClick={removeOption(index)}
+        >
           Delete option {index + 1}
         </Button>
       </Col>

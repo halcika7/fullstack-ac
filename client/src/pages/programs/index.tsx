@@ -49,6 +49,7 @@ function Orders() {
                   <td>{new Date(program.createdAt).toLocaleString()}</td>
                   <td className="icons">
                     <Button
+                      data-testid="delete-icon"
                       className="delete-icon"
                       active
                       color="danger"

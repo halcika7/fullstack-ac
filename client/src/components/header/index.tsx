@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { createSelector } from '@reduxjs/toolkit';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   Navbar,
   NavbarBrand,
@@ -10,42 +13,46 @@ import {
   Button,
 } from 'reactstrap';
 import { NavLink as Link } from 'react-router-dom';
-import { createSelector } from '@reduxjs/toolkit';
-import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as NavIcon } from '../../svg/car-wash.svg';
+
 import { AppState } from '../../store/reducer';
 import { logout } from '../../pages/auth/store/actions';
+
 import './index.scss';
 
-const tokenState = createSelector(
+const userState = createSelector(
   (state: AppState) => state.auth,
-  auth => auth.token
+  auth => auth.user
 );
 
 function Header() {
-  const token = useSelector(tokenState);
+  const user = useSelector(userState);
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const toggle = () => setIsOpen(prev => !prev);
 
-  const signOut = () => {
-    dispatch(logout());
-  };
+  const signOut = () => dispatch(logout());
 
   return (
     <Navbar tag="header" dark expand="md container shadow">
       <NavbarBrand
         className="nav-icon"
         tag={Link}
-        to={token ? '/dashboard' : '/'}
+        to={user ? '/dashboard' : '/'}
       >
         <NavIcon />
       </NavbarBrand>
-      <NavbarToggler onClick={toggle} />
+      <NavbarToggler onClick={toggle} data-testid="toggle" />
       <Collapse navbar isOpen={isOpen}>
         <Nav className="ms-auto" navbar>
-          {!token && (
+          {user ? (
+            <NavItem>
+              <Button color="danger" onClick={signOut} data-testid="signout">
+                Sign out
+              </Button>
+            </NavItem>
+          ) : (
             <>
               <NavItem>
                 <NavLink tag={Link} to="/login">
@@ -58,13 +65,6 @@ function Header() {
                 </NavLink>
               </NavItem>
             </>
-          )}
-          {token && (
-            <NavItem>
-              <Button color="danger" onClick={signOut}>
-                Sign out
-              </Button>
-            </NavItem>
           )}
         </Nav>
       </Collapse>

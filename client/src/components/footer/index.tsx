@@ -24,7 +24,7 @@ function Footer() {
           <a href="mailto: noreply@site.com">noreply@site.com</a>
         </Col>
       </Row>
-      <div className="footer-divider" />
+      <div className="footer-divider" data-testid="footer" />
       <p className="creds">Haris Beslic @ 2022. All Rights Reserved</p>
     </Container>
   );

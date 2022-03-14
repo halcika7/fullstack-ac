@@ -1,15 +1,10 @@
 import * as yup from 'yup';
+import { passwordMessage, passwordRegex } from '../../../utils/password';
 
 export const schema = yup.object({
-  password: yup
-    .string()
-    .required()
-    .min(6)
-    .max(30)
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*.])/, {
-      message:
-        'Password should contain at least one uppercase letter, one lowercase letter and one special character',
-    }),
+  password: yup.string().required().min(6).max(30).matches(passwordRegex, {
+    message: passwordMessage,
+  }),
   confirmPassword: yup
     .string()
     .required()

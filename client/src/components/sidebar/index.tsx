@@ -8,7 +8,7 @@ type Props = {
 
 function Sidebar({ role }: Props) {
   return (
-    <div className="sidebar">
+    <div className="sidebar" data-testid="sidebar">
       <div className="side-menu">
         <Nav vertical className="list-unstyled pb-3">
           <NavItem>

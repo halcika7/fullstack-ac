@@ -51,9 +51,11 @@ function Info({ user }: Props) {
   }, [profile.errors, setError]);
 
   useEffect(() => {
-    setValue('username', user.username);
-    setValue('first_name', user.first_name);
-    setValue('last_name', user.last_name);
+    if (user) {
+      setValue('username', user.username);
+      setValue('first_name', user.first_name);
+      setValue('last_name', user.last_name);
+    }
   }, [user, setValue]);
 
   useEffect(() => {
@@ -71,6 +73,7 @@ function Info({ user }: Props) {
             type="text"
             label="Username"
             error={errors.username?.message}
+            testId="username"
           />
 
           <FloatingInput
@@ -78,6 +81,7 @@ function Info({ user }: Props) {
             type="text"
             label="First Name"
             error={errors.first_name?.message}
+            testId="first_name"
           />
 
           <FloatingInput
@@ -85,6 +89,7 @@ function Info({ user }: Props) {
             type="text"
             label="Last Name"
             error={errors.last_name?.message}
+            testId="last_name"
           />
 
           <Button
@@ -92,6 +97,7 @@ function Info({ user }: Props) {
             color="success"
             className="submit-button"
             disabled={!isValid}
+            data-testid="submit"
           >
             {isSubmitting ? (
               <Spinner color="info">Loading...</Spinner>

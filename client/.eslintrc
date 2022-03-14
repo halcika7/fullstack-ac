@@ -14,7 +14,6 @@
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
-    "plugin:promise/recommended",
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -31,7 +30,6 @@
     "@typescript-eslint",
     "unicorn",
     "import",
-    "promise",
     "no-secrets",
     "prettier"
   ],
@@ -42,6 +40,9 @@
     "no-param-reassign": ["error", { "props": false }],
     "react/require-default-props": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "jest/no-mocks-import": "off",
+    "testing-library/no-unnecessary-act": "off",
+    "jsx-a11y/aria-role": "off"
   }
 }

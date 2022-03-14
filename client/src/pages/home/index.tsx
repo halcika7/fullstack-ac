@@ -6,7 +6,7 @@ import './index.scss';
 function Home() {
   return (
     <>
-      <section className="jumbo">
+      <section className="jumbo" data-testid="home">
         <div className="overlay" />
         <div className="content">
           <p>Modern equipment</p>

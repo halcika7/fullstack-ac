@@ -1,17 +1,21 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, Card, CardBody, Container, Spinner } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
+
 import FloatingInput from '../../components/inputs/floating-input';
-import './index.scss';
+import Toaster from '../../components/toast';
+
+import useNavigateToDashboard from '../../hooks/useNavigateToDashboard';
+
 import { schema } from './yup/register.yup';
 import { register as registerAction } from './store/actions';
-import useNavigateToDashboard from '../../hooks/useNavigateToDashboard';
-import Toaster from '../../components/toast';
 import { authActions } from './store/slice';
 import { authState } from './store/selector';
 import { RegisterDto } from './store/types';
+
+import './index.scss';
 
 function Register() {
   const dispatch = useDispatch();
@@ -33,9 +37,9 @@ function Register() {
     dispatch(registerAction(data));
   };
 
-  const toggleToaster = () => {
+  const toggleToaster = useCallback(() => {
     dispatch(authActions.resetValidationErrors());
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     if (authErrors) {
@@ -49,9 +53,9 @@ function Register() {
 
   useEffect(() => {
     return () => {
-      dispatch(authActions.resetValidationErrors());
+      toggleToaster();
     };
-  }, [dispatch]);
+  }, [toggleToaster]);
 
   return (
     <Container className="auth-content">
@@ -64,30 +68,35 @@ function Register() {
               type="text"
               register={register('username')}
               error={errors.username?.message}
+              testId="username"
             />
             <FloatingInput
               label="First Name"
               type="text"
               register={register('first_name')}
               error={errors.first_name?.message}
+              testId="first_name"
             />
             <FloatingInput
               label="Last Name"
               type="text"
               register={register('last_name')}
               error={errors.last_name?.message}
+              testId="last_name"
             />
             <FloatingInput
               label="Password"
               type="password"
               register={register('password')}
               error={errors.password?.message}
+              testId="password"
             />
             <FloatingInput
               label="Confirm Password"
               type="password"
               register={register('confirmPassword')}
               error={errors.confirmPassword?.message}
+              testId="confirmPassword"
             />
 
             <Button
@@ -96,6 +105,7 @@ function Register() {
               color="success"
               className="submit-button"
               disabled={!isValid}
+              data-testid="register"
             >
               {isSubmitting ? (
                 <Spinner color="info">Loading...</Spinner>

@@ -18,6 +18,7 @@ import { CarType } from '../orders/store/types';
 import { makeOrder } from '../orders/store/actions';
 import { getMe } from '../auth/store/actions';
 import { orderActions } from '../orders/store/slice';
+import './index.scss';
 
 type OptionType = {
   name: string;
@@ -27,7 +28,7 @@ type OptionType = {
 
 const selector = createSelector(
   (state: AppState) => state.programs.programs,
-  (state: AppState) => state.auth.user!.number_of_orders,
+  (state: AppState) => state.auth.user?.number_of_orders,
   (state: AppState) => state.orders.message,
   (programs, number_of_orders, message) => ({
     programs,
@@ -45,7 +46,9 @@ function CreateOrder() {
   const { programs, numberOfOrders, message } = useSelector(selector);
 
   const price = options.reduce((prev, curr) => prev + curr.price, 0);
-  const total = price - price * 0.1;
+  const totalOrders = numberOfOrders! + 1;
+  const shouldDiscount = totalOrders % 10 === 0;
+  const total = shouldDiscount ? price - price * 0.1 : price;
 
   const changeSelectedCar = (
     val: SingleValue<{ label: string; value: string }>
@@ -70,7 +73,7 @@ function CreateOrder() {
       makeOrder({
         price,
         total_price: total,
-        discount: total ? 10 : 0,
+        discount: shouldDiscount ? 10 : 0,
         car_type: car,
         options: options.map(option => ({
           name: option.name,
@@ -93,13 +96,15 @@ function CreateOrder() {
   }, [message, dispatch, navigate]);
 
   return (
-    <Container style={{ paddingTop: '2rem' }}>
-      <Row style={{ marginBottom: '2rem' }}>
+    <Container className="order-wrapper">
+      <Row>
         <Col sm={{ size: 12 }}>
           <Card>
             <CardHeader>Select car type</CardHeader>
             <CardBody>
               <Select
+                classNamePrefix="list"
+                data-testid="select"
                 defaultValue={{ value: 'sedan', label: 'Sedan' }}
                 options={[
                   { value: 'sedan', label: 'Sedan' },
@@ -115,16 +120,16 @@ function CreateOrder() {
       </Row>
       {car && (
         <Row>
-          {programs.map(program => (
+          {programs.map((program, index) => (
             <Col
-              style={{ marginBottom: '1rem' }}
+              className="program-wrapper"
               key={program._id}
               sm={{ size: 12 }}
             >
               <Card>
                 <CardHeader>{program.name}</CardHeader>
                 <CardBody>
-                  {program.options.map(option => {
+                  {program.options.map((option, i) => {
                     const data = {
                       name: option.name,
                       price: option.price + option[car],
@@ -136,17 +141,19 @@ function CreateOrder() {
                         {option[car]}
                         {!selectedOptions.includes(option._id) ? (
                           <Button
-                            style={{ marginLeft: '1rem' }}
+                            className="margin-left"
                             color="success"
                             onClick={addOption(data)}
+                            data-testid={`add-option-${index}-${i}`}
                           >
                             Add option
                           </Button>
                         ) : (
                           <Button
-                            style={{ marginLeft: '1rem' }}
+                            className="margin-left"
                             color="danger"
                             onClick={removeOption(option._id)}
+                            data-testid={`remove-option-${index}-${i}`}
                           >
                             Remove option
                           </Button>
@@ -164,7 +171,7 @@ function CreateOrder() {
         <>
           <div>
             <p>Price: {price}</p>
-            {(numberOfOrders + 1) % 10 === 0 && (
+            {shouldDiscount && (
               <>
                 <p>Discount 10%</p>
                 <p>Total {total}</p>
@@ -172,10 +179,11 @@ function CreateOrder() {
             )}
           </div>
           <Button
-            style={{ marginBottom: '1rem' }}
+            className="submit"
             color="success"
             block
             onClick={onSubmit}
+            data-testid="submit"
           >
             Order
           </Button>

@@ -26,9 +26,7 @@ function Orders() {
   }, [fetchOrders]);
 
   useEffect(() => {
-    if (orders.length) {
-      setDisabled(false);
-    }
+    setDisabled(false);
   }, [orders]);
 
   return (
@@ -36,7 +34,7 @@ function Orders() {
       <Card className="activities__card_table">
         <CardBody>
           <Table bordered hover responsive striped>
-            <thead>
+            <thead data-testid="theader">
               <tr>
                 <th>ID</th>
                 <th>Car type</th>
@@ -65,7 +63,13 @@ function Orders() {
         </CardBody>
       </Card>
       {hasMore && (
-        <Button disabled={disabled} block color="success" onClick={fetchOrders}>
+        <Button
+          disabled={disabled}
+          block
+          color="success"
+          onClick={fetchOrders}
+          data-testid="load-more"
+        >
           Load More
         </Button>
       )}

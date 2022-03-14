@@ -33,7 +33,7 @@ const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.token = action.payload;
     });
-    builder.addCase(login.rejected || register.rejected, (state, action) => {
+    builder.addCase(login.rejected, (state, action) => {
       state.errors = action.payload?.errors;
       if (!action.payload?.errors) {
         state.message = action.payload?.message;
@@ -45,6 +45,9 @@ const authSlice = createSlice({
     });
     builder.addCase(register.fulfilled, (state, action) => {
       state.message = action.payload;
+    });
+    builder.addCase(register.rejected, (state, action) => {
+      state.errors = action.payload?.errors;
     });
     builder.addCase(getMe.fulfilled, (state, action) => {
       state.loading = false;

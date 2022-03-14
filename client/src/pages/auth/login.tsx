@@ -1,17 +1,22 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Button, Card, CardBody, Container, Spinner } from 'reactstrap';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Button, Card, CardBody, Container, Spinner } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import './index.scss';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
+
 import FloatingInput from '../../components/inputs/floating-input';
+import Toaster from '../../components/toast';
+
 import { schema } from './yup/login.yup';
+
+import useNavigateToDashboard from '../../hooks/useNavigateToDashboard';
+
 import { login } from './store/actions';
 import { authActions } from './store/slice';
-import Toaster from '../../components/toast';
-import useNavigateToDashboard from '../../hooks/useNavigateToDashboard';
 import { authState } from './store/selector';
 import { LoginDto } from './store/types';
+
+import './index.scss';
 
 function Login() {
   const dispatch = useDispatch();
@@ -22,7 +27,6 @@ function Login() {
     formState: { isSubmitting, errors, isValid },
     handleSubmit,
     register,
-    clearErrors,
     setError,
   } = useForm<LoginDto>({
     resolver: yupResolver(schema),
@@ -31,13 +35,12 @@ function Login() {
   });
 
   const onSubmit: SubmitHandler<LoginDto> = async data => {
-    clearErrors();
-    await dispatch(login(data));
+    dispatch(login(data));
   };
 
-  const toggleToaster = () => {
+  const toggleToaster = useCallback(() => {
     dispatch(authActions.resetValidationErrors());
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     if (authErrors) {
@@ -51,9 +54,9 @@ function Login() {
 
   useEffect(() => {
     return () => {
-      dispatch(authActions.resetValidationErrors());
+      toggleToaster();
     };
-  }, [dispatch]);
+  }, [toggleToaster]);
 
   return (
     <Container className="auth-content">
@@ -66,6 +69,7 @@ function Login() {
               type="text"
               label="Username"
               error={errors.username?.message}
+              testId="username"
             />
 
             <FloatingInput
@@ -73,6 +77,7 @@ function Login() {
               type="password"
               label="Password"
               error={errors.password?.message}
+              testId="password"
             />
 
             <Button

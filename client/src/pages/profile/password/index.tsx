@@ -61,6 +61,7 @@ function Password({ user }: Props) {
             type="password"
             label="Password"
             error={errors.password?.message}
+            testId="password"
           />
 
           <FloatingInput
@@ -68,6 +69,7 @@ function Password({ user }: Props) {
             type="password"
             label="Confirm Password"
             error={errors.confirmPassword?.message}
+            testId="confirm_password"
           />
 
           <Button
@@ -75,6 +77,7 @@ function Password({ user }: Props) {
             color="success"
             className="submit-button"
             disabled={!isValid}
+            data-testid="submit"
           >
             {isSubmitting ? (
               <Spinner color="info">Loading...</Spinner>

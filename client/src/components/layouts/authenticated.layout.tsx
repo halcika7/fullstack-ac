@@ -11,14 +11,14 @@ type Props = {
 
 const roleSelector = createSelector(
   (state: AppState) => state.auth.user,
-  user => user!.role
+  user => user?.role
 );
 
 function AuthenticatedLayout({ children }: Props) {
   const role = useSelector(roleSelector);
   return (
     <div className="auth-layout">
-      <Sidebar role={role} />
+      <Sidebar role={role!} />
       {children}
     </div>
   );

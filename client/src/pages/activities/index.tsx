@@ -35,7 +35,7 @@ function Activities() {
       <Card className="activities__card_table">
         <CardBody>
           <Table bordered hover responsive striped>
-            <thead>
+            <thead data-testid="theader">
               <tr>
                 <th>ID</th>
                 <th>Activity type</th>
@@ -64,6 +64,7 @@ function Activities() {
           block
           color="success"
           onClick={fetchActivities}
+          data-testid="load-more"
         >
           Load More
         </Button>
